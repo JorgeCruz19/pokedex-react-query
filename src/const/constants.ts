@@ -1,0 +1,16 @@
+export const COLORS: Record<string, string> = {
+	fire: '#FB6C6C',
+	grass: '#48D0B0',
+	electric: '#FFD86F',
+	water: '#77BDFE',
+	ground: '#E0C068',
+	rock: '#B8A038',
+	fairy: '#EE99AC',
+	poison: '#7C538C',
+	bug: '#A8B820',
+	dragon: '#97b3e6',
+	psychic: '#F85888',
+	flying: '#A890F0',
+	fighting: '#C03028',
+	normal: '#A8A878',
+};
