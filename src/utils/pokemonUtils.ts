@@ -101,7 +101,7 @@ export const formatPokemonId = (id: number): string => {
 export const getSpeciesNames = (chain: EvolutionChain) => {
 	const names: Record<string, string | number>[] = [];
 
-	function traverse(node) {
+	function traverse(node: EvolutionChain['chain']) {
 		if (node.species && node.species.name) {
 			names.push({
 				name: node.species.name,
