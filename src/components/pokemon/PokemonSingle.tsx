@@ -27,7 +27,6 @@ const PokemonSingle = () => {
 		return initialPokemonId;
 	});
 
-	console.log(currentPokemonId);
 	const { pokemon, isLoading, isError, error, refetch } = useGetPokemonById(currentPokemonId);
 
 	// Memoize expensive calculations
@@ -187,7 +186,7 @@ const PokemonSingle = () => {
 
 				{/* Evolution */}
 				<h2 className='text-sm font-bold text-gray-900 mb-3 tracking-wider'>EVOLUTION</h2>
-				<div className='flex items-start justify-center gap-2 mb-6'>
+				<div className='flex items-start justify-center flex-wrap gap-2 mb-6'>
 					{pokemon?.evolution_chain?.map((evolution) => (
 						<div key={evolution.id} className='text-center'>
 							<div className='w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-2'>

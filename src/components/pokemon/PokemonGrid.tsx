@@ -72,7 +72,7 @@ const GridPokemon = () => {
 	if (isError) {
 		return <Alert type='danger' message={error?.message ?? 'Error'} />;
 	}
-	console.log('renders');
+
 	return (
 		<>
 			<Search searchPokemon={searchPokemon} setSearchPokemon={handleSearchChange} />

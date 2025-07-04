@@ -8,6 +8,24 @@ type PokemonResponse = {
 	results: Pokemon[];
 };
 
+type evolution_chain = {
+	id: number;
+	name: string;
+	min_level?: number | null;
+	sprites: {
+		other: {
+			'official-artwork': {
+				front_default: string;
+			};
+		};
+		front_default: string;
+	};
+};
+
+type PokemonWithEvolution = Pokemon & {
+	evolution_chain: evolution_chain[];
+};
+
 const getAllPokemons = async (page = 0, limit = 12): Promise<PokemonResponse> => {
 	const response = await fetch(
 		`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${page * limit}`
@@ -31,7 +49,7 @@ const getAllPokemons = async (page = 0, limit = 12): Promise<PokemonResponse> =>
 	};
 };
 
-const getPokemonById = async (id: number): Promise<Pokemon> => {
+const getPokemonById = async (id: number): Promise<PokemonWithEvolution> => {
 	const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
 	if (!response.ok) {
 		throw new Error(`Failed to fetch pokemon with id ${id}`);
@@ -58,7 +76,7 @@ const getPokemonById = async (id: number): Promise<Pokemon> => {
 	return {
 		...data,
 		evolution_chain: evolvesArr,
-	};
+	} as PokemonWithEvolution;
 };
 
 const getPokemonByName = async (name: string): Promise<Pokemon> => {
