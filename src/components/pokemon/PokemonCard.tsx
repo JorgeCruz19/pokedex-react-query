@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router';
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 import { Card, CardContent } from '../ui/Card';
 import { TypeBadge } from './TypeBagde';
 
@@ -16,10 +16,21 @@ const PokemonCard = ({ pokemon }: PokemonProps) => {
 	const primaryType = pokemon.types[0].type.name;
 	const typeColor = getTypeColor(primaryType);
 
+	// Memoize navigation callback
+	const handleCardClick = useCallback(() => {
+		navigate(`/pokemon/${pokemon.id}`);
+	}, [navigate, pokemon.id]);
+
+	// Use high-quality image with fallback
+	const pokemonImage =
+		pokemon.sprites?.front_default ||
+		pokemon.sprites?.other?.['official-artwork']?.front_default ||
+		pokemon.sprites?.other?.dream_world?.front_default;
+
 	return (
 		<Card
 			className='group cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl bg-white/80 backdrop-blur-sm border-0 overflow-hidden'
-			onClick={() => navigate(`/pokemon/${pokemon.id}`)}
+			onClick={handleCardClick}
 			style={{
 				background: `linear-gradient(135deg, ${typeColor}20 5%, white 50%)`,
 			}}>
@@ -33,12 +44,11 @@ const PokemonCard = ({ pokemon }: PokemonProps) => {
 					{/* Pokemon Image */}
 					<div className='w-full h-32 flex items-center justify-center mb-3'>
 						<img
-							src={
-								pokemon?.sprites?.other?.['official-artwork']?.front_default ||
-								pokemon.sprites.front_default
-							}
+							src={pokemonImage}
 							alt={pokemon.name}
 							className='w-24 h-24 object-contain transition-transform duration-300 group-hover:scale-110 drop-shadow-lg'
+							decoding='async'
+							fetchPriority='low'
 							loading='lazy'
 						/>
 					</div>
